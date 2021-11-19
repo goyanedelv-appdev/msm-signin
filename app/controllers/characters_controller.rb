@@ -5,6 +5,9 @@ class CharactersController < ApplicationController
     @list_of_characters = matching_characters.order({ :created_at => :desc })
 
     render({ :template => "characters/index.html.erb" })
+
+    # Using different layout
+    # render({ :template => "characters/index.html.erb", :layout => "your-own" })
   end
 
   def show

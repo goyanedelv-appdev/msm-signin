@@ -1,6 +1,8 @@
 class BookmarksController < ApplicationController
   def index
-    matching_bookmarks = Bookmark.all
+    # matching_bookmarks = Bookmark.where({ :user_id => @current_user.id })
+    
+    matching_bookmarks = @current_user.bookmarks.order(:created_at)
 
     @list_of_bookmarks = matching_bookmarks.order({ :created_at => :desc })
 
@@ -19,7 +21,9 @@ class BookmarksController < ApplicationController
 
   def create
     the_bookmark = Bookmark.new
-    the_bookmark.user_id = params.fetch("query_user_id")
+    
+    the_bookmark.user_id = @current_user.id
+
     the_bookmark.movie_id = params.fetch("query_movie_id")
 
     if the_bookmark.valid?
@@ -41,7 +45,7 @@ class BookmarksController < ApplicationController
       the_bookmark.save
       redirect_to("/bookmarks/#{the_bookmark.id}", { :notice => "Bookmark updated successfully."} )
     else
-      redirect_to("/bookmarks/#{the_bookmark.id}", { :alert => "Bookmark failed to update successfully." })
+      redirect_to("/bookmarks/" + the_bookmark.id.to_s, { :alert => "Bookmark failed to update successfully." })
     end
   end
 

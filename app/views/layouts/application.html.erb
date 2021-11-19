@@ -18,34 +18,22 @@
 
   <body>
     <nav>
-      <ul>
-          <li>
-            <a href="/user_sign_in">
-              Sign in
-            </a>
-          </li>
-          <li>
-            <a href="/user_sign_up">
-              Sign up
-            </a>
-          </li>
-          <li>
-            <a href="/user_sign_out">
-              Sign out
-            </a>
-          </li>
-          <li>
-            <a href="/bookmarks">
-              My bookmarks
-            </a>
-          </li>
-          <li>
-            <a href="/">
-            Home
-            </a>
-          </li>
-      </ul>
-    </nav>
+    <ul>
+      <li><a href="/actors">Actors</a></li>
+      <li><a href="/directors">Directors</a></li>
+      <li><a href="/movies">Movies</a></li>
+      <li><a href="/characters">Characters</a></li>
+      <li><a href="/bookmarks">Bookmarks</a></li>
+
+      <% if @current_user == nil %>
+        <li><a href="/user_sign_up">Sign up</a></li>
+        <li><a href="/user_sign_in">Sign in</a></li>
+      <% else %>
+        <li><a href="/user_sign_out">Sign out</a></li>
+        <li><a href="/edit_user_profile">Edit <%= @current_user.first_name %></a></li>
+      <% end %>
+
+    </ul>
 
     <%= yield %>
   </body>
